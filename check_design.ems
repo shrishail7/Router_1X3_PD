@@ -1,0 +1,21 @@
+<Database>
+versionNumber:2
+Name/home1/BPD23/SSdolle/VLSI_PD/Fusion_compiler_labs/FC_LABS/Router_1X3/check_design.ems
+Creation TimeMon Dec  2 22:42:11 2024
+Modified TimeMon Dec  2 22:42:11 2024
+Design Namerouter_top
+Library Namerouter1x3.dlib
+</Database>
+<RuleCount>
+DFT-0111
+DMM-1181
+MV-0272
+</RuleCount>
+<UserDefinedRules>
+</UserDefinedRules>
+<Messages>
+DMM-118Informationmmactionrepair10mmhandlerassign_prefer_direction_for_metal_layer10mmobjnamelayer_missing_prefer_direction_router1x3.dlib:router_top.design10mmtypelayer_missing_prefer_direction10objnamerouter1x3.dlib:router_top.design10objtypeblock10repairedstaterepaired10
+DFT-011Informationreason10
+MV-027WarningtieNet*Logic0*1[ get_net { *Logic0* } ]8
+MV-027WarningtieNet*Logic1*1[ get_net { *Logic1* } ]8
+</Messages>

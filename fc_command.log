@@ -1,0 +1,91 @@
+#@ # 
+#@ # Running fc_shell Version V-2023.12-SP4 for linux64 -- Jun 03, 2024
+#@ # Date:   Sat Dec 14 20:58:31 2024
+#@ # Run by: SSdolle@mavenserver-RH3
+#@ 
+
+gui_set_pref_value -category {SelectByNamePalette} -key {ObjectType} -value {Logical Cells}
+open_lib /home1/BPD23/SSdolle/VLSI_PD/Fusion_compiler_labs/FC_LABS/Router_1X3/router1x3.dlib -edit
+open_block /home1/BPD23/SSdolle/VLSI_PD/Fusion_compiler_labs/FC_LABS/Router_1X3/router1x3.dlib:router_top.design
+link_block
+win_set_filter -visible -class cell -filter {assembly_die_margin bridge clock_margin hard_macro_margin hard_margin route_blockage_margin seal_ring_margin soft_margin substrate} -layer {}
+win_set_filter -visible -class pseudo_bump -filter {deleted} -layer {}
+win_set_filter -visible -class pseudo_tsv -filter {deleted} -layer {}
+win_set_filter -visible -class placement_blockage -filter {wiring} -layer {0-82}
+win_set_filter -expand_cell_types {soft_macro  }
+win_set_select_class -visible {cell port bound routing_blockage shaping_blockage pg_region bump_region pseudo_bump pseudo_tsv pin_blockage block_shielding topology_node topology_edge topology_repeater annotation_shape core_area die_area edit_group shape via terminal fill_cell metal_area metal_area_hole placement_blockage }
+win_set_filter -class cell -filter {array assembly_die_margin bridge clock_margin hard_macro_margin hard_margin route_blockage_margin seal_ring_margin soft_margin substrate} -layer {}
+win_set_filter -class pseudo_bump -filter {deleted} -layer {}
+win_set_filter -class pseudo_tsv -filter {deleted} -layer {}
+win_set_filter -class placement_blockage -filter {wiring} -layer {0-82}
+win_set_select_class {cell port bound routing_blockage shaping_blockage pg_region bump_region pseudo_bump pseudo_tsv pin_blockage topology_node topology_edge topology_repeater annotation_shape edit_group shape via metal_area metal_area_hole placement_blockage }
+report_power
+check_pg_drc
+check_pg_connectivity
+connect_pg_net -automatic
+create_pg_mesh_pattern mesh_pattern -layers { {{vertical_layer: M6} {width: 0.84} {pitch: 8.4} {spacing: interleaving}}  {{horizontal_layer: M7} {width: 0.84} {pitch: 8.4} {spacing: interleaving}} }
+set_pg_strategy mesh_strategy -core -pattern {{pattern: mesh_pattern}{nets: {VDD VSS}}} -blockage {macros: all}
+create_pg_std_cell_conn_pattern std_cell_pattern
+set_pg_strategy std_cell_strategy -core -pattern {{pattern: std_cell_pattern}{nets: {VDD VSS}}}
+compile_pg -ignore_via_drc
+create_pg_std_cell_conn_pattern std_cell_pattern
+man create_pg_std_cell_conn_pattern std_cell_pattern
+man create_pg_std_cell_conn_pattern
+win_select_objects -slct_targets global -at {173.746 87.012} -radius 0.6441
+gui_scroll -window [gui_get_current_window -types Layout -mru] -hrel -0.25
+gui_scroll -window [gui_get_current_window -types Layout -mru] -hrel -0.25
+gui_scroll -window [gui_get_current_window -types Layout -mru] -hrel -0.25
+gui_zoom -window [gui_get_current_window -view] -factor 2.0
+gui_zoom -window [gui_get_current_window -view] -factor 2.0
+gui_zoom -window [gui_get_current_window -view] -factor 2.0
+gui_zoom -window [gui_get_current_window -view] -factor 2.0
+gui_zoom -window [gui_get_current_window -view] -factor 2.0
+gui_zoom -window [gui_get_current_window -view] -factor 2.0
+gui_zoom -window [gui_get_current_window -view] -factor 2.0
+gui_zoom -window [gui_get_current_window -view] -factor 2.0
+gui_zoom -window [gui_get_current_window -view] -factor 2.0
+gui_zoom -window [gui_get_current_window -view] -factor 0.5
+gui_zoom -window [gui_get_current_window -view] -factor 0.5
+gui_zoom -window [gui_get_current_window -view] -factor 0.5
+gui_zoom -window [gui_get_current_window -view] -factor 0.5
+gui_zoom -window [gui_get_current_window -view] -factor 0.5
+gui_zoom -window [gui_get_current_window -view] -full
+save_block -as power_planing
+report_power
+check_pg_drc
+check_pg_connectivity
+check_pg_missing_vias
+check_pg_nets
+clock_opt
+route_group -all_clock_nets -reuse_existing_global_route true -stop_after_global_route true
+
+route_group -all_clock_nets -reuse_existing_global_route true -stop_after_global_route true
+redirect $::sh_dev_null { set_app_options -name opt.internal.current_block_utilization -value [report_utilization] }
+
+set_app_options -as_user_default -list {route.global.global_route_topology_style 1}
+route_group -all_clock_nets -reuse_existing_global_route true
+set_app_options -as_user_default -list {route.global.global_route_topology_style 0}
+
+
+redirect $::sh_dev_null { set_app_options -name opt.internal.current_block_utilization -value [report_utilization] }
+
+
+
+
+
+create_routing_rule _snps_autoNdr_power -spacings {M1 {0.100000} M2 {0.112000} M3 {0.112000} M4 {0.112000} M5 {0.112000} M6 {0.112000} M7 {0.112000} M8 {0.112000} M9 {0.320000} MRDL {4.000000} }  -spacing_weight_levels {M1 { medium } M2 { medium } M3 { medium } M4 { medium } M5 { medium } M6 { medium } M7 { medium } M8 { medium } M9 { medium } MRDL { medium } } -spacing_length_thresholds {M1 { 1.0 } M2 { 1.0 } M3 { 1.0 } M4 { 1.0 } M5 { 1.0 } M6 { 1.0 } M7 { 1.0 } M8 { 1.0 } M9 { 1.0 } MRDL { 1.0 } }
+remove_routing_rules _snps_autoNdr_power
+check_legality
+check__design -check
+check_design -check
+check_design -checks
+report_routing_rules -verbose
+route_auto
+route_opt
+route_eco
+check_design
+suppress_message -force CMD-013
+redirect -file /dev/null { set previous_unified_check_report_format_enable [get_app_option_value -name da.common.unified_check_report_format] }
+redirect -file /dev/null { set_app_options -name da.common.unified_check_report_format -value false }
+redirect -file /dev/null { set_app_options -name da.common.unified_check_report_format -value $previous_unified_check_report_format_enable }
+check_design -checks

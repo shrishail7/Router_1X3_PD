@@ -1,0 +1,33 @@
+##########################################################################################
+# Lab 1 - Reading RTL
+# Script: run.tcl
+##########################################################################################
+
+#settings libraries
+source -echo ./setup.tcl
+
+#creating design libraries
+create_lib -technology $TECH_FILE -ref_libs $REFERENCE_LIBRARY router1x3.dlib
+
+#reading RTL
+analyze -format verilog [glob rtl/*.v]
+elaborate router_top
+set_top_module router_top
+
+#reading tlu
+read_parasitic_tech -layermap ../ref/tech/saed32nm_tf_itf_tluplus.map -tlup ../ref/tech/saed32nm_1p9m_Cmax.lv.nxtgrd -name maxTLU
+read_parasitic_tech -layermap ../ref/tech/saed32nm_tf_itf_tluplus.map -tlup ../ref/tech/saed32nm_1p9m_Cmin.lv.nxtgrd -name minTLU
+
+#upf
+load_upf ./design_data/router_core.upf
+commit_upf
+
+
+#MCMM
+source -echo ./design_data/mcmm_router_core.tcl
+
+#Read SDC
+read_sdc ./Constraints/router.sdc
+
+
+
